@@ -5,10 +5,10 @@ import com.muniz.socialbooks.services.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,4 +23,16 @@ public class AutorResources {
         return ResponseEntity.status(HttpStatus.OK).body(autorService.findAll());
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    private ResponseEntity<Void> salvar(@RequestBody Autor autor) {
+        autor = autorService.salvar(autor);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(autor.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    private ResponseEntity<Autor> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(autorService.findById(id));
+
+    }
 }

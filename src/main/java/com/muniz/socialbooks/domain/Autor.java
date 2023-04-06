@@ -1,5 +1,6 @@
 package com.muniz.socialbooks.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
@@ -15,7 +16,10 @@ public class Autor {
     private Long id;
 
     private String nome;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date nascimento;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nacionalidade;
     @OneToMany(mappedBy = "autor")
     @JsonIgnore

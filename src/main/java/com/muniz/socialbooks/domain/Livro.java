@@ -1,5 +1,6 @@
 package com.muniz.socialbooks.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
@@ -15,12 +16,13 @@ public class Livro {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nome;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date publicacao;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String editora;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String resumo;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "livro")
     private List<Comentario> comentarios;
     @JsonInclude(JsonInclude.Include.NON_NULL)
