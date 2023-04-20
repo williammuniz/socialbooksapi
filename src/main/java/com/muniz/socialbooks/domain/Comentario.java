@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -13,6 +15,8 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "O campo texto não pode ser vazio.")
+    @Size(max = 1500, message = "O comentário não pode conter mais de 1500 caracteres.")
     private String texto;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String usuario;

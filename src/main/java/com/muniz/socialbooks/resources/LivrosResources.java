@@ -3,6 +3,7 @@ package com.muniz.socialbooks.resources;
 import com.muniz.socialbooks.domain.Comentario;
 import com.muniz.socialbooks.domain.Livro;
 import com.muniz.socialbooks.services.LivroService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class LivrosResources {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> salvar(@RequestBody Livro livro) {
+    public ResponseEntity<Void> salvar(@Valid @RequestBody Livro livro) {
         livro = livroService.salvar(livro);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(livro.getId()).toUri();

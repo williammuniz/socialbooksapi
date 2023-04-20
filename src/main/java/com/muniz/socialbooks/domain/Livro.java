@@ -3,6 +3,9 @@ package com.muniz.socialbooks.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.List;
@@ -14,13 +17,18 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O campo nome não pode ser vazio.")
     private String nome;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "O campo publicação não pode ser vazio.")
     private Date publicacao;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O campo editora não pode ser vazio.")
     private String editora;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O campo RESUMO não pode ser vazio.")
+    @Size(max = 1500, message = "O resumo não pode conter mais de 1500 caracteres.")
     private String resumo;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "livro")
