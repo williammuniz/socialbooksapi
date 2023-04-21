@@ -5,6 +5,7 @@ import com.muniz.socialbooks.domain.Livro;
 import com.muniz.socialbooks.services.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/livros")
@@ -38,7 +40,9 @@ public class LivrosResources {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         Optional<Livro> livro = livroService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(livro);
+
+        CacheControl cacheControl = CacheControl.maxAge(40, TimeUnit.SECONDS);
+        return ResponseEntity.status(HttpStatus.OK).cacheControl(cacheControl).body(livro);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
